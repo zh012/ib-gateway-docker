@@ -15,6 +15,11 @@ stop_ibc() {
 	echo ".> 😘 Received SIGINT or SIGTERM. Shutting down IB Gateway."
 
 	#
+	if pgrep websockify >/dev/null; then
+		echo ".> Stopping noVNC/websockify."
+		pkill websockify
+	fi
+	#
 	if pgrep x11vnc >/dev/null; then
 		echo ".> Stopping x11vnc."
 		pkill x11vnc
@@ -65,6 +70,16 @@ start_vnc() {
 	fi
 }
 
+start_novnc() {
+	# start noVNC (websockify) proxy on 0.0.0.0:6080 to VNC :5900
+	if pgrep x11vnc >/dev/null; then
+		echo ".> Starting noVNC on :6080"
+		websockify --web=/usr/share/novnc/ 0.0.0.0:6080 localhost:5900 &
+	else
+		echo ".> noVNC not started (VNC disabled)"
+	fi
+}
+
 start_IBC() {
 	echo ".> Starting IBC in ${TRADING_MODE} mode, with params:"
 	echo ".>		Version: ${TWS_MAJOR_VRSN}"
@@ -111,6 +126,9 @@ set_java_heap
 
 # start VNC server
 start_vnc
+
+# start noVNC proxy
+start_novnc
 
 ###############################################################################
 #####		Paper, Live or both start process

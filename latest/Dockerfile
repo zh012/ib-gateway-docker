@@ -26,33 +26,33 @@ WORKDIR /tmp/setup
 
 # Prepare system
 RUN apt-get update -y && \
-  apt-get install --no-install-recommends --yes \
-  curl ca-certificates unzip && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
-  if [ "$(uname -m)" = "aarch64" ]; then \
+    apt-get install --no-install-recommends --yes \
+    curl ca-certificates unzip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    if [ "$(uname -m)" = "aarch64" ]; then \
     curl -sSLO ${ZULU_URL} ; \
     tar -xzf ${ZULU_FILE} -C /usr/local/ ; \
     ln -s /usr/local/${ZULU_NAME} /usr/local/zulu17 ; \
-  fi && \
-# Install IB Gateway
-# Use this instead of "RUN curl .." to install a local file:
-#COPY ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh .
-  curl -sSOL ${IB_GATEWAY_URL} && \
-  curl -sSOL ${IB_GATEWAY_URL}.sha256 && \
-  sha256sum --check ./${IB_GATEWAY_FILE}.sha256 &&\
-  chmod a+x ./${IB_GATEWAY_FILE} && \
-  if [ "$(uname -m)" = "aarch64" ]; then \
+    fi && \
+    # Install IB Gateway
+    # Use this instead of "RUN curl .." to install a local file:
+    #COPY ibgateway-${IB_GATEWAY_VERSION}-standalone-linux-x64.sh .
+    curl -sSOL ${IB_GATEWAY_URL} && \
+    curl -sSOL ${IB_GATEWAY_URL}.sha256 && \
+    sha256sum --check ./${IB_GATEWAY_FILE}.sha256 &&\
+    chmod a+x ./${IB_GATEWAY_FILE} && \
+    if [ "$(uname -m)" = "aarch64" ]; then \
     app_java_home=/usr/local/zulu17 ./${IB_GATEWAY_FILE} -q -dir /root/Jts/ibgateway/${IB_GATEWAY_VERSION} ; \
-  else \
+    else \
     ./${IB_GATEWAY_FILE} -q -dir /root/Jts/ibgateway/${IB_GATEWAY_VERSION} ; \
-  fi && \
-  # Install IBC
-  curl -sSOL ${IBC_URL} && \
-  mkdir /root/ibc && \
-  unzip ./${IBC_FILE} -d /root/ibc && \
-  chmod -R u+x /root/ibc/*.sh && \
-  chmod -R u+x /root/ibc/scripts/*.sh
+    fi && \
+    # Install IBC
+    curl -sSOL ${IBC_URL} && \
+    mkdir /root/ibc && \
+    unzip ./${IBC_FILE} -d /root/ibc && \
+    chmod -R u+x /root/ibc/*.sh && \
+    chmod -R u+x /root/ibc/scripts/*.sh
 
 COPY ./config/ibgateway/jts.ini.tmpl /root/Jts/jts.ini.tmpl
 COPY ./config/ibc/config.ini.tmpl /root/ibc/config.ini.tmpl
@@ -88,17 +88,17 @@ COPY --chown=${USER_ID}:${USER_GID} --from=setup /root/ ${HOME}
 
 # Prepare system
 RUN apt-get update -y && \
-  apt-get upgrade -y && \
-  apt-get install --no-install-recommends --yes \
-  gettext-base socat xvfb x11vnc sshpass openssh-client && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
-  if id ubuntu; then \
+    apt-get upgrade -y && \
+    apt-get install --no-install-recommends --yes \
+    gettext-base socat xvfb x11vnc sshpass openssh-client novnc websockify && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    if id ubuntu; then \
     userdel -rf ubuntu \
-  ;fi && \
-  groupadd --gid ${USER_GID} ibgateway && \
-  useradd -ms /bin/bash --uid ${USER_ID} --gid ${USER_GID} ibgateway && \
-  chmod a+x ${SCRIPT_PATH}/*.sh
+    ;fi && \
+    groupadd --gid ${USER_GID} ibgateway && \
+    useradd -ms /bin/bash --uid ${USER_ID} --gid ${USER_GID} ibgateway && \
+    chmod a+x ${SCRIPT_PATH}/*.sh
 
 USER ${USER_ID}:${USER_GID}
 WORKDIR ${HOME}

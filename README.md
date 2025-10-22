@@ -16,6 +16,7 @@ It includes:
   virtual framebuffer to run IB Gateway Application without graphics hardware.
 - [x11vnc](https://wiki.archlinux.org/title/x11vnc) - a VNC server to interact
   with the IB Gateway user interface (optional, for development / maintenance purpose).
+- [noVNC](https://github.com/novnc/noVNC) - browser-based VNC via websockify on port 6080.
 - xrdp/xfce enviroment for TWS. Build on top of [linuxserver/rdesktop](https://github.com/linuxserver/docker-rdesktop/).
 - [socat](https://manpages.ubuntu.com/manpages/noble/en/man1/socat.1.html) a
   tool to accept TCP connection from non-localhost and relay it to IB Gateway
@@ -104,6 +105,7 @@ services:
       - "127.0.0.1:4001:4003"
       - "127.0.0.1:4002:4004"
       - "127.0.0.1:5900:5900"
+      - "127.0.0.1:6080:6080"
 
 ```
 
@@ -216,6 +218,7 @@ The following ports will be ready for usage on the ib-gateway container and dock
 | 4003 | TWS API port for live accounts. Through socat, internal TWS API port 4001. Mapped **externally** to 4001 in sample `docker-compose.yml`.  |
 | 4004 | TWS API port for paper accounts. Through socat, internal TWS API port 4002. Mapped **externally** to 4002 in sample `docker-compose.yml`. |
 | 5900 | When `VNC_SERVER_PASSWORD` was defined, the VNC server port. |
+| 6080 | noVNC web UI (proxied to VNC). Open `http://localhost:6080`. |
 
 TWS image uses the following ports
 
