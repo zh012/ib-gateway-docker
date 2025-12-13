@@ -38,7 +38,7 @@ jobs:
         with:
           images: |
             ghcr.io/zh012/ib-gateway
-            zh012/ib-gateway
+            hzh012/ib-gateway
           flavor: |
             latest=false
           tags: |
@@ -67,7 +67,7 @@ jobs:
         with:
           images: |
             ghcr.io/zh012/tws-rdesktop
-            zh012/tws-rdesktop
+            hzh012/tws-rdesktop
           flavor: |
             latest=false
           tags: |
