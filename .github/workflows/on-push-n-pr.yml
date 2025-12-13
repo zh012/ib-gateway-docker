@@ -7,7 +7,7 @@ on:
     tags-ignore:
       - "v*"
   pull_request:
-    branches: ["master", "!update-*-to-*", "!IBC-update*"]
+    branches: ["main", "!update-*-to-*", "!IBC-update*"]
 
 jobs:
   build:
@@ -15,6 +15,6 @@ jobs:
     strategy:
       matrix:
         channel: ["stable", "latest"]
-    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@master
+    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@main
     with:
       channel: ${{ matrix.channel }}

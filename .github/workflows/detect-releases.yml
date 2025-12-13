@@ -109,17 +109,17 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git pull
-          git checkout -b "$t_branch" origin/master
+          git checkout -b "$t_branch" origin/main
           git add '${{ matrix.channel }}' README.md
           git commit -m 'Update `${{ matrix.channel }}` to `${{ steps.version.outputs.build_version }}`'
           git push --set-upstream origin "$t_branch"
 
-          gh pr create --base master --fill
+          gh pr create --base main --fill
 
   build:
     name: Call build workflow
     needs: detect-release
     if: needs.detect-release.outputs.update == 'true'
-    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@master
+    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@main
     with:
       channel: ${{ needs.detect-release.outputs.channel }}

@@ -84,7 +84,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git pull
-          git checkout -b "$branch" origin/master
+          git checkout -b "$branch" origin/main
 
           # update Dockerfile.template, but don't run update.sh
           # next ib gateway release will run update.sh
@@ -97,7 +97,7 @@ jobs:
           git commit -m "Update IBC from ${ver} to ${latest}"
           git push --set-upstream origin "$branch"
 
-          gh pr create --base master --fill
+          gh pr create --base main --fill
 
   build:
     name: Call build workflow
@@ -106,6 +106,6 @@ jobs:
     strategy:
       matrix:
         channel: ["stable", "latest"]
-    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@master
+    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@main
     with:
       channel: ${{ matrix.channel }}
