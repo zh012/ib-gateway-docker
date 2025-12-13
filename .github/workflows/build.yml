@@ -18,7 +18,6 @@ jobs:
     continue-on-error: true
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -38,8 +37,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/gnzsnz/ib-gateway
-            gnzsnz/ib-gateway
+            ghcr.io/zh012/ib-gateway
+            zh012/ib-gateway
           flavor: |
             latest=false
           tags: |
@@ -67,8 +66,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/gnzsnz/tws-rdesktop
-            gnzsnz/tws-rdesktop
+            ghcr.io/zh012/tws-rdesktop
+            zh012/tws-rdesktop
           flavor: |
             latest=false
           tags: |

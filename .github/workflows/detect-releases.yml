@@ -116,11 +116,10 @@ jobs:
 
           gh pr create --base master --fill
 
-
   build:
     name: Call build workflow
     needs: detect-release
     if: needs.detect-release.outputs.update == 'true'
-    uses: gnzsnz/ib-gateway-docker/.github/workflows/build.yml@master
+    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@master
     with:
-        channel: ${{ needs.detect-release.outputs.channel }}
+      channel: ${{ needs.detect-release.outputs.channel }}

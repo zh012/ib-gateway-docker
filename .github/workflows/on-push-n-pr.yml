@@ -3,18 +3,18 @@ name: Docker Image CI
 on:
   workflow_dispatch:
   push:
-    branches: ['*', '!update-*-to-*', '!IBC-update*']
+    branches: ["*", "!update-*-to-*", "!IBC-update*"]
     tags-ignore:
-      - 'v*'
+      - "v*"
   pull_request:
-    branches: ['master', '!update-*-to-*', '!IBC-update*']
+    branches: ["master", "!update-*-to-*", "!IBC-update*"]
 
 jobs:
   build:
-      name: Build image
-      strategy:
-        matrix:
-          channel: ['stable', 'latest']
-      uses: gnzsnz/ib-gateway-docker/.github/workflows/build.yml@master
-      with:
-          channel: ${{ matrix.channel }}
+    name: Build image
+    strategy:
+      matrix:
+        channel: ["stable", "latest"]
+    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@master
+    with:
+      channel: ${{ matrix.channel }}

@@ -99,14 +99,13 @@ jobs:
 
           gh pr create --base master --fill
 
-
   build:
     name: Call build workflow
     needs: detect-release
     if: needs.detect-release.outputs.update == 'true'
     strategy:
       matrix:
-        channel: ['stable', 'latest']
-    uses: gnzsnz/ib-gateway-docker/.github/workflows/build.yml@master
+        channel: ["stable", "latest"]
+    uses: zh012/ib-gateway-docker/.github/workflows/build.yml@master
     with:
-        channel: ${{ matrix.channel }}
+      channel: ${{ matrix.channel }}
