@@ -66,7 +66,7 @@ COPY ./scripts /root/scripts
 
 FROM ubuntu:24.04
 
-ENV IB_GATEWAY_VERSION=10.37.1l
+ENV IB_GATEWAY_VERSION=10.37.1n
 # IB Gateway user constants
 ARG USER_ID=1000
 ARG USER_GID=1000
